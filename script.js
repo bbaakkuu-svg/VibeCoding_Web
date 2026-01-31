@@ -92,3 +92,22 @@ if (suggestionForm) {
     suggestionForm.reset();
   });
 }
+// --- Animación Fade-In con Intersection Observer ---
+
+const sections = document.querySelectorAll(".fade-section");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target); // Evita reanimar
+      }
+    });
+  },
+  {
+    threshold: 0.2, // Se activa cuando el 20% es visible
+  }
+);
+
+sections.forEach((section) => observer.observe(section));

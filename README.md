@@ -12,3 +12,6 @@ Requisitos Técnicos:
 
 PROMPT 2: 
 Actualiza el archivo HTML e incluye los IDs de videos reales de YouTube para tutoriales de Java y SQL.
+
+PROMPT 3: 
+Añade el nombre de la web (TUTOR-IA) y una animación de entrada 'Fade-In' para cada sección de lenguaje usado Intersection Observer en JavaScript para que aparezcan suavemente al hacer scroll

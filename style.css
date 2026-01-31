@@ -373,3 +373,14 @@ body {
     padding: 1.5rem 1.1rem;
   }
 }
+/* Animación Fade-In para secciones */
+.fade-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

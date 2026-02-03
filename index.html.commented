@@ -1,0 +1,676 @@
+<!-- 
+  ╔═══════════════════════════════════════════════════════════════════════════╗
+  ║                        AULA VIRTUAL - PLATAFORMA EDUCATIVA               ║
+  ║        Plataforma interactiva de enseñanza de programación en español    ║
+  ║                                                                            ║
+  ║  Características principales:                                             ║
+  ║  - 8 lenguajes de programación con recursos multimedia                   ║
+  ║  - Rutas de aprendizaje personalizadas (12 combinaciones)                ║
+  ║  - Foro de discusión en tiempo real (Firebase Firestore)                 ║
+  ║  - Buzón de sugerencias con grabación de voz                            ║
+  ║  - Perfil de autores recomendados                                        ║
+  ║  - Modo oscuro/claro integrado                                           ║
+  ║  - Totalmente responsivo (mobile-first)                                  ║
+  ║  - Sin dependencias externas (vanilla HTML/CSS/JS)                       ║
+  ╚═══════════════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═══════════════════════ METADATOS Y CONFIGURACIÓN =══════════════════════
+         ════════════════════════════════════════════════════════════════════════════ -->
+    
+    <!-- Codificación de caracteres: UTF-8 permite caracteres especiales españoles -->
+    <meta charset="UTF-8">
+    
+    <!-- Viewport: configura la visualización responsive en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Aula Virtual - Plataforma Educativa de Programación</title>
+    
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═════════════════════════════ ESTILOS CSS ═════════════════════════════════
+         ════════════════════════════════════════════════════════════════════════════ -->
+    
+    <!-- Importar hoja de estilos personalizada (diseño, colores, animaciones) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Importar fuentes Google Fonts: Inter (sin serif moderno) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═════════════════════════ FIREBASE (BASE DE DATOS) ════════════════════════
+         Inicializa Firebase para:
+         - Foro de discusión en tiempo real (Firestore)
+         - Sincronización de datos entre usuarios
+         ════════════════════════════════════════════════════════════════════════════ -->
+    
+    <!-- Script de Firebase: inicialización principal -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    
+    <!-- Script de Firestore: base de datos NoSQL en tiempo real -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ════════════════════════ LÓGICA JAVASCRIPT ════════════════════════════════
+         Script principal: maneja toda la funcionalidad de la plataforma
+         - Renderizado dinámico de componentes
+         - Gestión de estado (localStorage)
+         - Integración Firebase
+         - Interactividad del usuario
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═══════════════════ ENCABEZADO: NAVEGACIÓN PRINCIPAL ═════════════════════
+         
+         Contenido:
+         - Barra de navegación fija en la parte superior
+         - Enlaces internos a las 6 secciones principales
+         - Logo/marca de la plataforma
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <header>
+        <nav>
+            <!-- ⋯ MENÚ DE NAVEGACIÓN PRINCIPAL ⋯
+                 Enlaces que permiten navegar entre las secciones
+                 Estructura semántica: <nav> > <ul> > <li> > <a>
+            ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯ -->
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#lenguajes">Lenguajes de Programación</a></li>
+                <li><a href="#rutas">Rutas de Aprendizaje</a></li>
+                <li><a href="#comunidad">Comunidad</a></li>
+                <li><a href="#sugerencias">Buzón de Sugerencias</a></li>
+                <li><a href="#autores">Autores Recomendados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═════════════════════════ CONTENIDO PRINCIPAL ═════════════════════════════
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <main>
+        
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 1: DASHBOARD (Bienvenida)                                   │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Titulo principal y mensaje de bienvenida                  │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="dashboard">
+            <h1>Dashboard Principal</h1>
+            <p>Bienvenido a tu aula virtual. Aquí puedes acceder a tus cursos y recursos.</p>
+        </section>
+
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 2: LENGUAJES DE PROGRAMACIÓN                                │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Grid de 8 tarjetas interactivas con:                     │
+             │ - Icono del lenguaje                                                │
+             │ - Miniatura (enlazada a video en YouTube)                           │
+             │ - Título y descripción                                              │
+             │ - Categorías de contenido                                            │
+             │ - Botón de acción (Ver video)                                       │
+             │ - Barra de progreso                                                 │
+             │                                                                      │
+             │ Lenguajes incluidos: Java, Python, JavaScript, SQL, Bash,          │
+             │ HTML5, CSS3, Git/GitHub                                             │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="lenguajes" aria-labelledby="lenguajes-title">
+            <div class="container">
+                <!-- Encabezado de sección -->
+                <header class="section-header">
+                    <h2 id="lenguajes-title">Lenguajes de Programación</h2>
+                    <p class="muted">Selecciona un lenguaje para ver recursos: teoría, coding en vivo, retos y proyecto integrador.</p>
+                </header>
+
+                <!-- Grid responsivo de tarjetas de lenguajes -->
+                <div class="languages-grid" role="list">
+                    
+                    <!-- TARJETA 1: Java -->
+                    <article class="lang-card" role="listitem" data-lang="Java">
+                        <!-- Sección de media: icono + miniatura + animación -->
+                        <div class="card-media">
+                            <!-- Icono del lenguaje (esquina superior izquierda) -->
+                            <img class="lang-icon" src="IMAGENES/java.svg" alt="Icono Java" aria-hidden="true">
+                            <!-- Enlace a video: imagen miniatura clickeable -->
+                            <a class="thumb-link" href="https://youtu.be/JOAqpdM36wI" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Java (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/java-thumb.jpg" alt="Miniatura Java">
+                            </a>
+                            <!-- Animación SVG (rotating/pulsing) -->
+                            <!-- <img class="lang-anim" src="IMAGENES/java-anim.svg" alt="Animación Java" aria-hidden="true"> -->
+                        </div>
+                        <!-- Sección de contenido: texto e interacciones -->
+                        <div class="card-body">
+                            <!-- Título del lenguaje -->
+                            <h3 class="lang-title">Java</h3>
+                            <!-- Descripción breve -->
+                            <p class="lang-desc">Lenguaje robusto para aplicaciones empresariales y Android.</p>
+                            <!-- Barra de progreso de aprendizaje -->
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="java" aria-label="Progreso de Java"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <!-- Categorías/tipos de contenido disponible -->
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Java">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <!-- Acciones de la tarjeta: botones -->
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="java">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="java" aria-label="Seleccionar Java para comparar"> Comparar</label>
+                            </div>
+                            <!-- Botón principal: enlace al video -->
+                            <a class="video-link" href="https://youtu.be/JOAqpdM36wI" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <!-- Código de ejemplo (mostrado cuando se hace clic en mockup) -->
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 2: Python -->
+                    <article class="lang-card" role="listitem" data-lang="Python">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/python.svg" alt="Icono Python" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/Kp4Mvapo5kc" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Python (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/python-thumb.jpg" alt="Miniatura Python">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Python</h3>
+                            <p class="lang-desc">Lenguaje versátil para scripting, data science y desarrollo web.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="python" aria-label="Progreso de Python"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Python">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="python">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="python" aria-label="Seleccionar Python para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/Kp4Mvapo5kc" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 3: JavaScript -->
+                    <article class="lang-card" role="listitem" data-lang="JavaScript">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/javascript.svg" alt="Icono JavaScript" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/QoC4RxNIs5M" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de JavaScript (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/js-thumb.jpg" alt="Miniatura JavaScript">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">JavaScript</h3>
+                            <p class="lang-desc">El lenguaje de la web: front-end, back-end y tooling.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="javascript" aria-label="Progreso de JavaScript"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de JavaScript">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="javascript">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="javascript" aria-label="Seleccionar JavaScript para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/QoC4RxNIs5M" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 4: SQL -->
+                    <article class="lang-card" role="listitem" data-lang="SQL">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/sql.svg" alt="Icono SQL" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/uUdKAYl-F7g" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de SQL (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/sql-thumb.jpg" alt="Miniatura SQL">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">SQL</h3>
+                            <p class="lang-desc">Consultas y modelado de bases de datos relacionales.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="sql" aria-label="Progreso de SQL"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de SQL">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="sql">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="sql" aria-label="Seleccionar SQL para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/uUdKAYl-F7g" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 5: Bash -->
+                    <article class="lang-card" role="listitem" data-lang="Bash">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/bash.svg" alt="Icono Bash" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/ABgLEKFhlZE" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Bash (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/bash-thumb.jpg" alt="Miniatura Bash">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Bash</h3>
+                            <p class="lang-desc">Automatización y scripting en la línea de comandos.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="bash" aria-label="Progreso de Bash"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Bash">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="bash">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="bash" aria-label="Seleccionar Bash para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/ABgLEKFhlZE" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 6: HTML5 -->
+                    <article class="lang-card" role="listitem" data-lang="HTML5">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/html5.svg" alt="Icono HTML5" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/MJkdaVFHrto" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de HTML5 (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/html5-thumb.jpg" alt="Miniatura HTML5">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">HTML5</h3>
+                            <p class="lang-desc">Estructura semántica de documentos web.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="html5" aria-label="Progreso de HTML5"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de HTML5">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="html5">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="html5" aria-label="Seleccionar HTML5 para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/MJkdaVFHrto" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 7: CSS3 -->
+                    <article class="lang-card" role="listitem" data-lang="CSS3">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/css3.svg" alt="Icono CSS3" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/wZniZEbPAzk" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de CSS3 (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/css3-thumb.jpg" alt="Miniatura CSS3">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">CSS3</h3>
+                            <p class="lang-desc">Estilos modernos, flexbox, grid y animaciones.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="css3" aria-label="Progreso de CSS3"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de CSS3">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="css3">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="css3" aria-label="Seleccionar CSS3 para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/wZniZEbPAzk" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                    <!-- TARJETA 8: Git/GitHub -->
+                    <article class="lang-card" role="listitem" data-lang="GitHub">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/github.svg" alt="Icono Git/GitHub" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/3GymExBkKjE" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Git/GitHub (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/git-thumb.jpg" alt="Miniatura Git/GitHub">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Git / GitHub</h3>
+                            <p class="lang-desc">Control de versiones, ramas y colaboraciones en repositorios.</p>
+                            <div class="progress-wrap" aria-hidden="false">
+                                <div class="progress-bar" data-lang-id="git" aria-label="Progreso de Git/GitHub"><div class="progress-fill" style="width:0%"></div></div>
+                            </div>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Git/GitHub">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <div class="card-actions">
+                                <button class="mockup-btn" data-lang-id="git">Mockup</button>
+                                <label class="compare-label"><input type="checkbox" class="compare-checkbox" data-lang-id="git" aria-label="Seleccionar Git/GitHub para comparar"> Comparar</label>
+                            </div>
+                            <a class="video-link" href="https://youtu.be/3GymExBkKjE" target="_blank" rel="noopener noreferrer">Ver video</a>
+                            <pre class="code-mockup" hidden aria-hidden="true"></pre>
+                        </div>
+                    </article>
+
+                </div> <!-- Fin: languages-grid -->
+            </div> <!-- Fin: container -->
+        </section> <!-- Fin: sección lenguajes -->
+
+        <!-- ═════════════════════════════════════════════════════════════════════════
+             DATOS EMBEBIDOS: JSON CON INFORMACIÓN DE LENGUAJES
+             
+             Estructura: Array de objetos con metadatos de cada lenguaje
+             Uso: JavaScript lee este bloque y lo procesa para renderización dinámica
+             Campos: id, name, icon, thumb, video, categories
+             ═════════════════════════════════════════════════════════════════════════ -->
+        <script type="application/json" id="languages-data">
+        {
+            "languages": [
+                {"id":"java","name":"Java","icon":"IMAGENES/java.svg","thumb":"assets/images/java-thumb.jpg","video":"https://youtu.be/JOAqpdM36wI","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"python","name":"Python","icon":"IMAGENES/python.svg","thumb":"assets/images/python-thumb.jpg","video":"https://youtu.be/Kp4Mvapo5kc","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"javascript","name":"JavaScript","icon":"IMAGENES/javascript.svg","thumb":"assets/images/js-thumb.jpg","video":"https://youtu.be/QoC4RxNIs5M","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"sql","name":"SQL","icon":"IMAGENES/sql.svg","thumb":"assets/images/sql-thumb.jpg","video":"https://youtu.be/uUdKAYl-F7g","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"bash","name":"Bash","icon":"IMAGENES/bash.svg","thumb":"assets/images/bash-thumb.jpg","video":"https://youtu.be/ABgLEKFhlZE","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"html5","name":"HTML5","icon":"IMAGENES/html5.svg","thumb":"assets/images/html5-thumb.jpg","video":"https://youtu.be/MJkdaVFHrto","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"css3","name":"CSS3","icon":"IMAGENES/css3.svg","thumb":"assets/images/css3-thumb.jpg","video":"https://youtu.be/wZniZEbPAzk","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"git","name":"Git / GitHub","icon":"IMAGENES/github.svg","thumb":"assets/images/git-thumb.jpg","video":"https://youtu.be/3GymExBkKjE","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]}
+            ]
+        }
+        </script>
+
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 3: RUTAS DE APRENDIZAJE                                     │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Generador personalizado de rutas de aprendizaje          │
+             │ - Selector de perfil (principiante, intermedio, avanzado)          │
+             │ - Selector de objetivo (frontend, backend, data, devops)           │
+             │ - 12 combinaciones posibles (3 perfiles × 4 objetivos)             │
+             │ - Cada ruta incluye: secuencia, lenguajes, proyecto final,         │
+             │   y métodos de evaluación                                           │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="rutas" aria-labelledby="rutas-title">
+            <div class="container">
+                <!-- Encabezado de sección -->
+                <header class="section-header">
+                    <h2 id="rutas-title">Rutas de Aprendizaje</h2>
+                    <p class="muted">Elige tu perfil y objetivo para obtener una ruta personalizada.</p>
+                </header>
+
+                <!-- Formulario: Selectores de perfil y objetivo -->
+                <form id="route-form" class="route-form" aria-label="Seleccionar ruta">
+                    <!-- Selector de perfil de usuario -->
+                    <div class="form-row">
+                        <label for="profile-select">Perfil</label>
+                        <select id="profile-select">
+                            <option value="beginner">Principiante</option>
+                            <option value="intermediate">Intermedio</option>
+                            <option value="advanced">Avanzado</option>
+                        </select>
+                    </div>
+                    <!-- Selector de objetivo de aprendizaje -->
+                    <div class="form-row">
+                        <label for="objective-select">Objetivo</label>
+                        <select id="objective-select">
+                            <option value="frontend">Frontend</option>
+                            <option value="backend">Backend</option>
+                            <option value="data">Data</option>
+                            <option value="devops">DevOps</option>
+                        </select>
+                    </div>
+                    <!-- Botones de acción -->
+                    <div class="form-row form-controls">
+                        <button type="button" id="generate-route" class="btn primary">Generar Ruta</button>
+                        <button type="button" id="save-route" class="btn">Guardar Ruta</button>
+                    </div>
+                </form>
+
+                <!-- Contenedor para mostrar la ruta generada -->
+                <div id="route-result" class="route-result" aria-live="polite">
+                    <!-- La ruta generada se renderiza aquí dinámicamente -->
+                </div>
+            </div> <!-- Fin: container -->
+        </section> <!-- Fin: sección rutas -->
+
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 4: COMUNIDAD Y NETWORKING                                   │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Área colaborativa de la plataforma                       │
+             │ - Foro de discusión en tiempo real (Firebase Firestore)            │
+             │ - Grupos de estudio (simulado)                                     │
+             │ - Tablero de empleos (simulado)                                    │
+             │ - Actividad reciente (seguimiento)                                 │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="comunidad" aria-labelledby="comunidad-title">
+            <div class="container">
+                <!-- Encabezado de sección -->
+                <header class="section-header">
+                    <h2 id="comunidad-title">Comunidad y Networking</h2>
+                    <p class="muted">Foro de discusión en tiempo real, grupos de estudio y comunidad de desarrolladores.</p>
+                </header>
+
+                <!-- Grid de tres columnas: Foro | Grupos & Jobs | Actividad -->
+                <div class="community-grid">
+                    
+                    <!-- COLUMNA 1: FORO DE DISCUSIÓN (en tiempo real con Firebase) -->
+                    <div class="community-column">
+                        <h3>Foro de Discusión</h3>
+                        <!-- Formulario para publicar nuevos posts -->
+                        <div style="margin-bottom:1rem">
+                            <!-- Fila de entrada: título + botón publicar -->
+                            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+                                <input type="text" id="forum-title" placeholder="Título de tu pregunta..." style="flex:1;padding:0.5rem;border-radius:6px;border:1px solid var(--glass-border);background:transparent;color:var(--text)">
+                                <button id="forum-post-btn" class="btn primary" style="padding:0.5rem 1rem">Publicar</button>
+                            </div>
+                            <!-- Textarea para la descripción del post -->
+                            <textarea id="forum-body" placeholder="Describe tu pregunta o comentario..." style="width:100%;min-height:60px;padding:0.5rem;border-radius:6px;border:1px solid var(--glass-border);background:transparent;color:var(--text);resize:vertical"></textarea>
+                        </div>
+                        <!-- Lista de posts (renderizada en tiempo real desde Firebase) -->
+                        <ul id="forum-list" class="forum-list" aria-live="polite">
+                            <!-- Posts renderizados dinámicamente desde Firestore -->
+                        </ul>
+                    </div>
+
+                    <!-- COLUMNA 2: GRUPOS Y EMPLEOS -->
+                    <div class="community-column">
+                        <!-- Subsección: Grupos de estudio -->
+                        <h3>Grupos de Estudio</h3>
+                        <div id="groups-list" class="groups-list">
+                            <!-- Grupos renderizados dinámicamente -->
+                        </div>
+
+                        <!-- Subsección: Tablero de empleos -->
+                        <h3 style="margin-top:1rem">Tablero de Empleos (mock)</h3>
+                        <div id="jobs-list" class="jobs-list">
+                            <!-- Empleos renderizados dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- COLUMNA 3: SIDEBAR - ACTIVIDAD RECIENTE -->
+                    <aside class="community-aside">
+                        <h4>Actividad Reciente</h4>
+                        <!-- Lista de actividades recientes en la comunidad -->
+                        <ol id="community-activity" class="activity-list">
+                            <!-- Eventos de usuario renderizados dinámicamente -->
+                        </ol>
+                    </aside>
+                </div> <!-- Fin: community-grid -->
+            </div> <!-- Fin: container -->
+        </section> <!-- Fin: sección comunidad -->
+
+        <!-- NOTA: Configuración de Firebase será inicializada en app.js -->
+
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 5: BUZÓN DE SUGERENCIAS                                     │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Formulario de feedback con Web Speech API                │
+             │ - Entrada de texto o voz (dictado)                                 │
+             │ - Envío de sugerencias a localStorage                              │
+             │ - Listado y votación de sugerencias comunitarias                   │
+             │ - Ordenamiento y filtrado                                          │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="sugerencias" aria-labelledby="sugerencias-title">
+            <div class="container">
+                <!-- Encabezado de sección -->
+                <header class="section-header">
+                    <h2 id="sugerencias-title">Buzón de Sugerencias</h2>
+                    <p class="muted">Envía ideas, reportes o vota por las propuestas de la comunidad. Puedes escribir o usar voz.</p>
+                </header>
+
+                <!-- Panel de sugerencias: formulario + listado -->
+                <div class="suggestion-panel">
+                    <!-- Formulario para enviar sugerencias -->
+                    <form id="suggestion-form" aria-label="Formulario de sugerencias">
+                        <!-- Campo de texto para la sugerencia -->
+                        <div class="form-row">
+                            <label for="suggestion-text">Tu sugerencia</label>
+                            <textarea id="suggestion-text" placeholder="Describe tu idea o problema..." rows="3" required></textarea>
+                        </div>
+                        <!-- Controles: grabar, enviar, limpiar -->
+                        <div class="form-row form-controls">
+                            <button type="button" id="start-record" class="btn">🎤 Grabar voz</button>
+                            <button type="submit" class="btn primary">Enviar sugerencia</button>
+                            <button type="button" id="clear-sugg" class="btn">Limpiar</button>
+                        </div>
+                        <!-- Estado de grabación en vivo -->
+                        <div id="record-status" class="muted" aria-live="polite"></div>
+                    </form>
+
+                    <!-- Herramientas de filtrado y ordenamiento -->
+                    <div class="suggestion-tools">
+                        <!-- Selector: ordenar por qué criterio -->
+                        <label>Ordenar: 
+                            <select id="sugg-sort">
+                                <option value="new">Más recientes</option>
+                                <option value="top">Más votadas</option>
+                            </select>
+                        </label>
+                        <!-- Selector: filtrar qué sugerencias mostrar -->
+                        <label>Mostrar: 
+                            <select id="sugg-filter">
+                                <option value="all">Todas</option>
+                                <option value="mine">Mis contribuciones</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- Listado de sugerencias (renderizadas dinámicamente) -->
+                    <section id="sugg-list" aria-live="polite" aria-label="Histórico de sugerencias">
+                        <!-- Sugerencias renderizadas desde localStorage -->
+                    </section>
+
+                    <!-- Estadísticas del buzón -->
+                    <div id="sugg-stats" class="muted" aria-hidden="false"></div>
+                </div> <!-- Fin: suggestion-panel -->
+            </div> <!-- Fin: container -->
+        </section> <!-- Fin: sección sugerencias -->
+
+        <!-- ┌─────────────────────────────────────────────────────────────────────┐
+             │ SECCIÓN 6: AUTORES RECOMENDADOS                                     │
+             │ ⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯│
+             │ Contenido: Tarjetas de creadores de contenido educativo             │
+             │ - Foto/avatar del autor                                             │
+             │ - Nombre y enlace a canal                                           │
+             │ - Lenguajes que enseña                                              │
+             │ - Mensaje de agradecimiento                                         │
+             │ - Botón para visitar su canal                                       │
+             └─────────────────────────────────────────────────────────────────────┘ -->
+        <section id="autores" aria-labelledby="autores-title">
+            <div class="container">
+                <!-- Encabezado de sección -->
+                <header class="section-header">
+                    <h2 id="autores-title">Autores Recomendados</h2>
+                    <p class="muted">Creadoras y creadores que recomendamos por su calidad pedagógica y contenido en español.</p>
+                </header>
+
+                <!-- Grid de tarjetas de autores -->
+                <div class="authors-grid" role="list">
+                    
+                    <!-- AUTOR 1: HolaMundo -->
+                    <article class="author-card" role="listitem" data-author="holamundo">
+                        <!-- Sección: Foto del autor -->
+                        <div class="author-media">
+                            <img src="IMAGENES/OIP.webp" alt="HolaMundo" class="author-avatar">
+                        </div>
+                        <!-- Sección: Información del autor -->
+                        <div class="author-body">
+                            <!-- Nombre (clickeable = enlace al canal) -->
+                            <h3 class="author-name"><a href="https://www.youtube.com/@HolaMundoDev" target="_blank" rel="noopener noreferrer">HolaMundo</a></h3>
+                            <!-- Lenguajes que enseña (badges) -->
+                            <p class="author-langs">Lenguajes: <span class="badge">Java</span> <span class="badge">Python</span> <span class="badge">SQL</span> <span class="badge">Bash</span></p>
+                            <!-- Mensaje de agradecimiento -->
+                            <p class="author-thanks">Gracias por compartir contenido educativo de calidad en español.</p>
+                            <!-- Botón de acción: Visitar canal -->
+                            <a class="author-link" href="https://www.youtube.com/@HolaMundoDev" target="_blank" rel="noopener noreferrer">Visitar canal</a>
+                        </div>
+                    </article>
+
+                    <!-- AUTOR 2: MoureDev by Brais Moure -->
+                    <article class="author-card" role="listitem" data-author="mouredev">
+                        <!-- Sección: Foto del autor -->
+                        <div class="author-media">
+                            <img src="IMAGENES/brais-moure.jpg" alt="MoureDev by Brais Moure" class="author-avatar">
+                        </div>
+                        <!-- Sección: Información del autor -->
+                        <div class="author-body">
+                            <!-- Nombre (clickeable = enlace al canal) -->
+                            <h3 class="author-name"><a href="https://www.youtube.com/@mouredev" target="_blank" rel="noopener noreferrer">MoureDev by Brais Moure</a></h3>
+                            <!-- Lenguajes que enseña (badges) -->
+                            <p class="author-langs">Lenguajes: <span class="badge">JavaScript</span> <span class="badge">HTML5</span> <span class="badge">CSS3</span> <span class="badge">Git</span></p>
+                            <!-- Mensaje de agradecimiento -->
+                            <p class="author-thanks">Gracias por compartir tus conocimientos y experiencia en desarrollo web.</p>
+                            <!-- Botón de acción: Visitar canal -->
+                            <a class="author-link" href="https://www.youtube.com/@mouredev" target="_blank" rel="noopener noreferrer">Visitar canal</a>
+                        </div>
+                    </article>
+                </div> <!-- Fin: authors-grid -->
+            </div> <!-- Fin: container -->
+        </section> <!-- Fin: sección autores -->
+
+        <!-- ═════════════════════════════════════════════════════════════════════════
+             DATOS EMBEBIDOS: JSON CON INFORMACIÓN DE AUTORES
+             
+             Estructura: Array de objetos con metadatos de cada autor
+             Uso: JavaScript puede renderizar dinámicamente desde este JSON
+             Campos: id, name, avatar, languages, youtube, message
+             ═════════════════════════════════════════════════════════════════════════ -->
+        <script type="application/json" id="authors-data">
+        {
+            "authors": [
+                {"id":"holamundo","name":"HolaMundo","avatar":"IMAGENES/OIP.webp","languages":["Java","Python","SQL","Bash"],"youtube":"https://www.youtube.com/@HolaMundoDev","message":"Gracias por compartir contenido educativo de calidad en español."},
+                {"id":"mouredev","name":"MoureDev by Brais Moure","avatar":"IMAGENES/brais-moure.jpg","languages":["JavaScript","HTML5","CSS3","Git"],"youtube":"https://www.youtube.com/@mouredev","message":"Gracias por compartir tus conocimientos y experiencia en desarrollo web."}
+            ]
+        }
+        </script>
+    </main> <!-- Fin: contenido principal -->
+
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         ═════════════════════════════ PIE DE PÁGINA ════════════════════════════════
+         Información de copyright y créditos
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <footer>
+        <p>&copy; 2026 Aula Virtual. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="16" fill="#201f1f"/>
+  <g transform="translate(64,64)">
+    <rect x="-28" y="-18" width="56" height="36" rx="6" fill="#f7df1e"/>
+    <text x="0" y="6" text-anchor="middle" font-size="18" font-family="Arial" fill="#222">JS</text>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="16" fill="#0b1226"/>
+  <g transform="translate(64,64)">
+    <path d="M-28 -18 L28 -18 L20 30 L0 36 L-20 30 Z" fill="#e34f26"/>
+    <text x="0" y="6" text-anchor="middle" font-size="12" font-family="Arial" fill="#fff">HTML5</text>
+  </g>
+</svg>

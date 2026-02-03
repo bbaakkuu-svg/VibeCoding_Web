@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ==================== METADATOS ====================
+         Configuración básica de la página: charset, viewport, título
+    ================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Virtual - Plataforma Educativa de Programación</title>
+    
+    <!-- ==================== ESTILOS ====================
+         Importar CSS personalizado y fuentes de Google Fonts
+    ================================================== -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ==================== FIREBASE SDK ====================
+         Scripts para inicializar Firebase y Firestore (base de datos en tiempo real)
+    ================================================== -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    
+    <!-- ==================== LÓGICA PRINCIPAL ====================
+         Script principal que maneja la funcionalidad de la plataforma
+    ================================================== -->
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <!-- ==================== ENCABEZADO Y NAVEGACIÓN ====================
+         Barra de navegación fija con enlaces a las secciones principales
+    ================================================== -->
+    <header>
+        <nav>
+            <!-- ========== MENÚ DE NAVEGACIÓN ==========
+                 Enlaces internos a las principales secciones
+            ====================================== -->
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#lenguajes">Lenguajes de Programación</a></li>
+                <li><a href="#rutas">Rutas de Aprendizaje</a></li>
+                <li><a href="#comunidad">Comunidad</a></li>
+                <li><a href="#sugerencias">Buzón de Sugerencias</a></li>
+                <li><a href="#autores">Autores Recomendados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ==================== SECCIÓN: DASHBOARD ====================
+             Bienvenida y introducción principal de la plataforma
+        ================================================== -->
+        <section id="dashboard">
+            <h1>TUTOR-IA: Una Web para tu formación y actualización</h1>
+            <p>Bienvenido a tu aula virtual. Aquí puedes acceder a tus cursos y recursos.</p>
+        </section>
+
+        <!-- ==================== SECCIÓN: LENGUAJES DE PROGRAMACIÓN ====================
+             Grid de tarjetas con 8 lenguajes de programación disponibles
+             Cada tarjeta incluye: icono, enlace a video, descripción y categorías
+        ================================================== -->
+        <section id="lenguajes" aria-labelledby="lenguajes-title">
+            <div class="container">
+                <!-- Encabezado de la sección -->
+                <header class="section-header">
+                    <h2 id="lenguajes-title">Lenguajes de Programación</h2>
+                    <p class="muted">Selecciona un lenguaje para ver recursos: teoría, coding en vivo, retos y proyecto integrador.</p>
+                </header>
+
+                <!-- Grid de tarjetas de lenguajes -->
+                <div class="languages-grid" role="list">
+                    <!-- Tarjeta de lenguaje: Java -->
+                    <article class="lang-card" role="listitem" data-lang="Java">
+                        <!-- Contenedor de media: icono, miniatura y animación -->
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/java.svg" alt="Icono Java" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/JOAqpdM36wI" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Java (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/java-thumb.jpg" alt="Miniatura Java">
+                            </a>
+                        </div>
+                        <!-- Contenedor de contenido: título, descripción y categorías -->
+                        <div class="card-body">
+                            <h3 class="lang-title">Java</h3>
+                            <p class="lang-desc">Lenguaje robusto para aplicaciones empresariales y Android.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Java">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/JOAqpdM36wI" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="Python">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/python.svg" alt="Icono Python" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/Kp4Mvapo5kc" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Python (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/python-thumb.jpg" alt="Miniatura Python">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Python</h3>
+                            <p class="lang-desc">Lenguaje versátil para scripting, data science y desarrollo web.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Python">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/Kp4Mvapo5kc" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="JavaScript">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/javascript.svg" alt="Icono JavaScript" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/QoC4RxNIs5M" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de JavaScript (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/js-thumb.jpg" alt="Miniatura JavaScript">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">JavaScript</h3>
+                            <p class="lang-desc">El lenguaje de la web: front-end, back-end y tooling.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de JavaScript">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/QoC4RxNIs5M" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="SQL">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/sql.svg" alt="Icono SQL" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/uUdKAYl-F7g" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de SQL (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/sql-thumb.jpg" alt="Miniatura SQL">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">SQL</h3>
+                            <p class="lang-desc">Consultas y modelado de bases de datos relacionales.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de SQL">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/uUdKAYl-F7g" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="Bash">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/bash.svg" alt="Icono Bash" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/ABgLEKFhlZE" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Bash (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/bash-thumb.jpg" alt="Miniatura Bash">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Bash</h3>
+                            <p class="lang-desc">Automatización y scripting en la línea de comandos.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Bash">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/ABgLEKFhlZE" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="HTML5">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/html5.svg" alt="Icono HTML5" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/MJkdaVFHrto" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de HTML5 (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/html5-thumb.jpg" alt="Miniatura HTML5">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">HTML5</h3>
+                            <p class="lang-desc">Estructura semántica de documentos web.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de HTML5">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/MJkdaVFHrto" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="CSS3">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/css3.svg" alt="Icono CSS3" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/wZniZEbPAzk" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de CSS3 (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/css3-thumb.jpg" alt="Miniatura CSS3">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">CSS3</h3>
+                            <p class="lang-desc">Estilos modernos, flexbox, grid y animaciones.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de CSS3">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/wZniZEbPAzk" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+
+                    <article class="lang-card" role="listitem" data-lang="GitHub">
+                        <div class="card-media">
+                            <img class="lang-icon" src="IMAGENES/github.svg" alt="Icono Git/GitHub" aria-hidden="true">
+                            <a class="thumb-link" href="https://youtu.be/3GymExBkKjE" target="_blank" rel="noopener noreferrer" aria-label="Ver video introductorio de Git/GitHub (se abre en nueva pestaña)">
+                                <img class="thumb" src="assets/images/git-thumb.jpg" alt="Miniatura Git/GitHub">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="lang-title">Git / GitHub</h3>
+                            <p class="lang-desc">Control de versiones, ramas y colaboraciones en repositorios.</p>
+                            <ul class="lang-categories" aria-label="Categorías de contenido de Git/GitHub">
+                                <li>Explicación teórica</li>
+                                <li>Coding en vivo</li>
+                                <li>Retos prácticos</li>
+                                <li>Proyecto integrador</li>
+                            </ul>
+                            <a class="video-link" href="https://youtu.be/3GymExBkKjE" target="_blank" rel="noopener noreferrer">Ver video</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Datos simulados JSON: el front-end puede leer este bloque y renderizar dinámicamente -->
+        <script type="application/json" id="languages-data">
+        {
+            "languages": [
+                {"id":"java","name":"Java","icon":"IMAGENES/java.svg","thumb":"assets/images/java-thumb.jpg","video":"https://youtu.be/JOAqpdM36wI","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"python","name":"Python","icon":"IMAGENES/python.svg","thumb":"assets/images/python-thumb.jpg","video":"https://youtu.be/Kp4Mvapo5kc","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"javascript","name":"JavaScript","icon":"IMAGENES/javascript.svg","thumb":"assets/images/js-thumb.jpg","video":"https://youtu.be/QoC4RxNIs5M","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"sql","name":"SQL","icon":"IMAGENES/sql.svg","thumb":"assets/images/sql-thumb.jpg","video":"https://youtu.be/uUdKAYl-F7g","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"bash","name":"Bash","icon":"IMAGENES/bash.svg","thumb":"assets/images/bash-thumb.jpg","video":"https://youtu.be/ABgLEKFhlZE","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"html5","name":"HTML5","icon":"IMAGENES/html5.svg","thumb":"assets/images/html5-thumb.jpg","video":"https://youtu.be/MJkdaVFHrto","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"css3","name":"CSS3","icon":"IMAGENES/css3.svg","thumb":"assets/images/css3-thumb.jpg","video":"https://youtu.be/wZniZEbPAzk","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]},
+                {"id":"git","name":"Git / GitHub","icon":"IMAGENES/github.svg","thumb":"assets/images/git-thumb.jpg","video":"https://youtu.be/3GymExBkKjE","categories":["Explicación teórica","Coding en vivo","Retos prácticos","Proyecto integrador"]}
+            ]
+        }
+        </script>
+
+        <section id="rutas" aria-labelledby="rutas-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="rutas-title">Rutas de Aprendizaje</h2>
+                    <p class="muted">Elige tu perfil y objetivo para obtener una ruta personalizada.</p>
+                </header>
+
+                <form id="route-form" class="route-form" aria-label="Seleccionar ruta">
+                    <div class="form-row">
+                        <label for="profile-select">Perfil</label>
+                        <select id="profile-select">
+                            <option value="beginner">Principiante</option>
+                            <option value="intermediate">Intermedio</option>
+                            <option value="advanced">Avanzado</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="objective-select">Objetivo</label>
+                        <select id="objective-select">
+                            <option value="frontend">Frontend</option>
+                            <option value="backend">Backend</option>
+                            <option value="data">Data</option>
+                            <option value="devops">DevOps</option>
+                        </select>
+                    </div>
+                    <div class="form-row form-controls">
+                        <button type="button" id="generate-route" class="btn primary">Generar Ruta</button>
+                        <button type="button" id="save-route" class="btn">Guardar Ruta</button>
+                    </div>
+                </form>
+
+                <div id="route-result" class="route-result" aria-live="polite">
+                    <!-- Resultado de la ruta será renderizado aquí -->
+                </div>
+            </div>
+        </section>
+
+        <section id="comunidad" aria-labelledby="comunidad-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="comunidad-title">Comunidad y Networking</h2>
+                    <p class="muted">Foro de discusión en tiempo real, grupos de estudio y comunidad de desarrolladores.</p>
+                </header>
+
+                <div class="community-grid">
+                    <div class="community-column">
+                        <h3>Foro de Discusión</h3>
+                        <div style="margin-bottom:1rem">
+                            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+                                <input type="text" id="forum-title" placeholder="Título de tu pregunta..." style="flex:1;padding:0.5rem;border-radius:6px;border:1px solid var(--glass-border);background:transparent;color:var(--text)">
+                                <button id="forum-post-btn" class="btn primary" style="padding:0.5rem 1rem">Publicar</button>
+                            </div>
+                            <textarea id="forum-body" placeholder="Describe tu pregunta o comentario..." style="width:100%;min-height:60px;padding:0.5rem;border-radius:6px;border:1px solid var(--glass-border);background:transparent;color:var(--text);resize:vertical"></textarea>
+                        </div>
+                        <ul id="forum-list" class="forum-list" aria-live="polite">
+                            <!-- Posts renderizados en tiempo real desde Firebase -->
+                        </ul>
+                    </div>
+
+                    <div class="community-column">
+                        <h3>Grupos de Estudio</h3>
+                        <div id="groups-list" class="groups-list">
+                            <!-- Grupos renderizados dinámicamente -->
+                        </div>
+
+                        <h3 style="margin-top:1rem">Tablero de Empleos (mock)</h3>
+                        <div id="jobs-list" class="jobs-list">
+                            <!-- Jobs renderizados dinámicamente -->
+                        </div>
+                    </div>
+
+                    <aside class="community-aside">
+                        <h4>Actividad Reciente</h4>
+                        <ol id="community-activity" class="activity-list">
+                            <!-- Histórico de acciones -->
+                        </ol>
+                        <div id="daily-leaderboard" style="margin-top:1rem;padding:0.8rem;background:rgba(58,130,246,0.1);border-radius:8px">
+                            <!-- Ranking diario será renderizado aquí -->
+                        </div>
+                        <div id="weekly-leaderboard" style="margin-top:1rem;padding:0.8rem;background:rgba(76,29,149,0.1);border-radius:8px">
+                            <!-- Ranking semanal será renderizado aquí -->
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuración de Firebase será inicializada en app.js -->
+
+        <section id="sugerencias" aria-labelledby="sugerencias-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="sugerencias-title">Buzón de Sugerencias</h2>
+                    <p class="muted">Envía ideas, reportes o vota por las propuestas de la comunidad. Puedes escribir o usar voz.</p>
+                </header>
+
+                <div class="suggestion-panel">
+                    <form id="suggestion-form" aria-label="Formulario de sugerencias">
+                        <div class="form-row">
+                            <label for="suggestion-text">Tu sugerencia</label>
+                            <textarea id="suggestion-text" placeholder="Describe tu idea o problema..." rows="3" required></textarea>
+                        </div>
+                        <div class="form-row form-controls">
+                            <button type="button" id="start-record" class="btn">🎤 Grabar voz</button>
+                            <button type="submit" class="btn primary">Enviar sugerencia</button>
+                            <button type="button" id="clear-sugg" class="btn">Limpiar</button>
+                        </div>
+                        <div id="record-status" class="muted" aria-live="polite"></div>
+                    </form>
+
+                    <div class="suggestion-tools">
+                        <label>Ordenar: 
+                            <select id="sugg-sort">
+                                <option value="new">Más recientes</option>
+                                <option value="top">Más votadas</option>
+                            </select>
+                        </label>
+                        <label>Mostrar: 
+                            <select id="sugg-filter">
+                                <option value="all">Todas</option>
+                                <option value="mine">Mis contribuciones</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <section id="sugg-list" aria-live="polite" aria-label="Histórico de sugerencias">
+                        <!-- Sugerencias se renderizan dinámicamente -->
+                    </section>
+
+                    <div id="sugg-stats" class="muted" aria-hidden="false"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="autores" aria-labelledby="autores-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="autores-title">Autores Recomendados</h2>
+                    <p class="muted">Creadoras y creadores que recomendamos por su calidad pedagógica y contenido en español.</p>
+                </header>
+
+                <div class="authors-grid" role="list">
+                    <!-- Cards estáticas; también se pueden renderizar desde el JSON abajo -->
+                    <article class="author-card" role="listitem" data-author="holamundo">
+                        <div class="author-media">
+                            <img src="IMAGENES/OIP.webp" alt="HolaMundo" class="author-avatar">
+                        </div>
+                        <div class="author-body">
+                            <h3 class="author-name"><a href="https://www.youtube.com/@HolaMundoDev" target="_blank" rel="noopener noreferrer">HolaMundo</a></h3>
+                            <p class="author-langs">Lenguajes: <span class="badge">Java</span> <span class="badge">Python</span> <span class="badge">SQL</span> <span class="badge">Bash</span></p>
+                            <p class="author-thanks">Gracias por compartir contenido educativo de calidad en español.</p>
+                            <a class="author-link" href="https://www.youtube.com/@HolaMundoDev" target="_blank" rel="noopener noreferrer">Visitar canal</a>
+                        </div>
+                    </article>
+
+                    <article class="author-card" role="listitem" data-author="mouredev">
+                        <div class="author-media">
+                            <img src="IMAGENES/brais-moure.jpg" alt="MoureDev by Brais Moure" class="author-avatar">
+                        </div>
+                        <div class="author-body">
+                            <h3 class="author-name"><a href="https://www.youtube.com/@mouredev" target="_blank" rel="noopener noreferrer">MoureDev by Brais Moure</a></h3>
+                            <p class="author-langs">Lenguajes: <span class="badge">JavaScript</span> <span class="badge">HTML5</span> <span class="badge">CSS3</span> <span class="badge">Git</span></p>
+                            <p class="author-thanks">Gracias por compartir tus conocimientos y experiencia en desarrollo web.</p>
+                            <a class="author-link" href="https://www.youtube.com/@mouredev" target="_blank" rel="noopener noreferrer">Visitar canal</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Datos simulados de autores (permiten render dinámico desde JavaScript) -->
+        <script type="application/json" id="authors-data">
+        {
+            "authors": [
+                {"id":"holamundo","name":"HolaMundo","avatar":"IMAGENES/OIP.webp","languages":["Java","Python","SQL","Bash"],"youtube":"https://www.youtube.com/@HolaMundoDev","message":"Gracias por compartir contenido educativo de calidad en español."},
+                {"id":"mouredev","name":"MoureDev by Brais Moure","avatar":"IMAGENES/brais-moure.jpg","languages":["JavaScript","HTML5","CSS3","Git"],"youtube":"https://www.youtube.com/@mouredev","message":"Gracias por compartir tus conocimientos y experiencia en desarrollo web."}
+            ]
+        }
+        </script>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Aula Virtual. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

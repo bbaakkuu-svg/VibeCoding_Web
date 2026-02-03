@@ -2,7 +2,7 @@
 
 Plataforma web educativa moderna orientada al aprendizaje de programación mediante **video‑tutoriales en español de YouTube**, con rutas personalizadas, comunidad, gamificación y una experiencia de usuario intuitiva.
 
-El proyecto está diseñado para desarrollarse con **HTML5, CSS3 y JavaScript puro**, siguiendo un enfoque **Review‑Driven Development asistido por Agentes (Antigravity IDE)**.
+El proyecto está diseñado para desarrollarse con **HTML5, CSS3 y JavaScript puro**, siguiendo un enfoque **Review‑Driven Development asistido por Agentes (Visual Studio Code IDE)**.
 
 ---
 
@@ -159,7 +159,7 @@ Cada lenguaje se presenta mediante **cards interactivas** con:
 
 ---
 
-##  Arquitectura de Agentes (Antigravity IDE)
+##  Arquitectura de Agentes (Visual Studio Code IDE)
 
 El desarrollo se apoya en **sub‑agentes especializados**, cada uno con responsabilidades claras:
 
@@ -221,7 +221,7 @@ Gracias a todos los **creadores de contenido educativo en español** que compart
 
 ---
 
-> **Estado del proyecto:** En desarrollo 🚧
+> **Estado del proyecto:** En desarrollo 
 
 PROMPTS USADOS EN EL PROYECTO: 
 PROMPT 1: Actúa como un arquitecto frontend senior, diseñador UX/UI y desarrollador JavaScript experto.

@@ -1,20 +1,34 @@
 /*
   style.css
   Diseño moderno: mezcla ligera de glassmorphism + neumorphism
-  - Variables para light/dark mode
+  - Variables para un único tema (sin modo oscuro)
   - Grid y Flexbox para layout responsivo
   - Animaciones suaves (hover, fade, slide)
   - Accessible focus states y prefers-reduced-motion
+
+  Nota: se eliminó el soporte de modo Dark. Los botones/badges con gradiente usan texto blanco para mejor contraste.
+  Se añadió la variable --heading y se forzaron los headings/títulos a usarla para asegurar legibilidad.
 */
 
 :root{
-  --bg: #f5f7fb;
-  --surface: rgba(255,255,255,0.7);
-  --muted: #6b7280;
-  --text: #111827;
-  --accent: #4a90e2;
-  --accent-2: #7ed321;
-  --glass-border: rgba(255,255,255,0.6);
+  --bg: #ffffff;                  /* fondo claro */
+  --text: #0b66d1;                /* color azul para todo el texto */
+  --heading: #052b63;             /* azul muy oscuro para encabezados (alto contraste) */
+  --muted: #5b7fa6;               /* azul desaturado para elementos 'muted' */
+  --c-blue-50: #eaf2ff;
+  --c-blue-100: #d6e8ff;
+  --c-purple-50: #f3e8ff;
+  --c-purple-100: #eadcff;
+  --c-teal-50: #e8fbf7;
+  --c-teal-100: #d7f7ef;
+  --c-pink-50: #fff0f6;
+  --c-pink-100: #ffe6ee;
+  --c-yellow-50: #fffbe6;
+  --c-yellow-100: #fff4cc;
+  --surface: rgba(248,249,250,0.98); /* más opaco para mejor lectura */
+  --accent: #0b66d1;              /* acento azul */
+  --accent-2: #1fb85f;
+  --glass-border: rgba(0,0,0,0.08);
   --radius: 12px;
   --shadow-sm: 0 4px 10px rgba(16,24,40,0.06);
   --shadow-md: 0 10px 30px rgba(16,24,40,0.08);
@@ -25,17 +39,84 @@
   --font-sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-/* Dark theme variables (applied via [data-theme="dark"]) */
-[data-theme="dark"]{
-  --bg: #0f1724;
-  --surface: rgba(20,24,28,0.55);
-  --muted: #9ca3af;
-  --text: #e6eef8;
-  --accent: #3b82f6;
-  --accent-2: #34d399;
-  --glass-border: rgba(255,255,255,0.04);
-  --shadow-sm: 0 6px 18px rgba(2,6,23,0.6);
-  --shadow-md: 0 16px 50px rgba(2,6,23,0.65);
+/* Section boxes: color-coded backgrounds, integrated with glass style */
+section{
+  padding:2rem 0;
+  position:relative;
+}
+.section-box{
+  border-radius:16px;
+  padding:1.25rem;
+  margin:1.25rem 0;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-sm);
+  background:var(--surface);
+  transition:transform var(--transition-base),box-shadow var(--transition-base);
+}
+.section-accent-shape{position:absolute;right:-8%;top:-18%;width:48%;height:140%;filter:blur(42px);opacity:0.12;transform:rotate(-18deg);pointer-events:none}
+
+/* Encabezados / títulos: usar --heading para garantizar contraste */
+h1, h2, h3, h4, h5, h6,
+.section-header h2,
+.lang-title,
+.compare-panel h3,
+.author-name {
+  color: var(--heading);
+  -webkit-text-fill-color: var(--heading); /* asegurar compatibilidad en algunos navegadores */
+}
+
+/* Section header: title more visible with gradient and subtle shadow */
+.section-header h2{
+  margin:0 0 0.25rem 0;
+  font-size:1.6rem;
+  font-weight:800;
+  letter-spacing:0.2px;
+  text-transform:none;
+  text-shadow:0 6px 18px rgba(16,24,40,0.06);
+  z-index:2;
+  position:relative;
+}
+
+/* Make section body text use the global text color (azul) */
+section p, section .muted, section li, section .lang-desc, section .author-thanks, section .author-langs{
+  color: var(--text);
+}
+
+/* Ensure links and chips inside sections use readable azul */
+section a, section .lang-chip{
+  color: var(--text);
+}
+
+/* Excepción: mantener texto dentro de media de tarjeta también azul/blanco donde corresponda */
+.lang-card .card-media, .lang-card .card-media *{
+  color: var(--text) !important;
+}
+
+/* Specific section palettes (subtle, well-integrated) */
+#dashboard{background:linear-gradient(135deg, rgba(74,144,226,0.06), rgba(124,58,237,0.04));}
+#lenguajes .section-inner, #lenguajes{background:linear-gradient(135deg,var(--c-blue-50), rgba(255,255,255,0.65));}
+#rutas{background:linear-gradient(135deg,var(--c-purple-50), rgba(255,255,255,0.62));}
+#comunidad{background:linear-gradient(135deg,var(--c-teal-50), rgba(255,255,255,0.62));}
+#sugerencias{background:linear-gradient(135deg,var(--c-pink-50), rgba(255,255,255,0.62));}
+#autores{background:linear-gradient(135deg,var(--c-yellow-50), rgba(255,255,255,0.62));}
+
+/* Apply subtle accent shapes per section via pseudo-elements for a dynamic look */
+section::after{
+  content:'';position:absolute;right:-10%;top:-20%;width:55%;height:140%;border-radius:50%;filter:blur(64px);opacity:0.08;pointer-events:none;z-index:0}
+#lenguajes::after{background:linear-gradient(90deg,var(--c-blue-100), rgba(74,144,226,0.12));}
+#rutas::after{background:linear-gradient(90deg,var(--c-purple-100), rgba(124,58,237,0.12));}
+#comunidad::after{background:linear-gradient(90deg,var(--c-teal-100), rgba(16,185,129,0.12));}
+#sugerencias::after{background:linear-gradient(90deg,var(--c-pink-100), rgba(236,72,153,0.12));}
+#autores::after{background:linear-gradient(90deg,var(--c-yellow-100), rgba(245,158,11,0.12));}
+
+/* Ensure content sits above decorative shapes */
+section .container{position:relative;z-index:1}
+
+/* Slight lift on hover for entire sections on wide screens */
+@media(min-width:900px){
+  section:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
 }
 
 /* Base */
@@ -44,7 +125,8 @@ html,body{height:100%}
 body{
   margin:0;
   font-family:var(--font-sans);
-  background:linear-gradient(180deg,var(--bg),color-mix(in srgb, var(--bg) 96%, transparent));
+  background-color:var(--bg);
+  background: linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 96%, transparent));
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
@@ -52,7 +134,19 @@ body{
   transition:background var(--transition-base) ease, color var(--transition-base) ease;
 }
 
-.container{width:100%;max-width:var(--max-width);margin:0 auto;padding:1.5rem}
+/* Aplicar color base azul sin usar !important para permitir excepciones contextuales */
+body, p, li, span, input, textarea, select, button, a, h1, h2, h3, h4, h5, h6{
+  color:var(--text);
+}
+
+/* Inputs / controles: fondo y texto con buen contraste */
+input, textarea, select, button{
+  background: color-mix(in srgb, var(--surface) 85%, var(--bg) 15%);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  border-radius:8px;
+  padding:0.45rem 0.6rem;
+}
 
 /* Header / Nav */
 header{position:sticky;top:0;backdrop-filter:blur(6px);z-index:40;background:transparent}
@@ -78,13 +172,8 @@ nav a:hover,nav a:focus{transform:translateY(-2px);outline:none}
   font-weight:700;
   letter-spacing:-0.02em;
   line-height:1.1;
-  background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  text-transform:uppercase;
-  word-spacing:0.1em;
-  animation:titleGlow 3s ease-in-out infinite;
+  text-transform:none;
+  word-spacing:0.02em;
 }
 #dashboard p{
   color:var(--muted);
@@ -134,7 +223,19 @@ nav a:hover,nav a:focus{transform:translateY(-2px);outline:none}
 .lang-categories{display:flex;flex-wrap:wrap;gap:0.4rem;margin:0;padding:0;list-style:none}
 .lang-categories li{background:transparent;padding:0.28rem 0.5rem;border-radius:999px;font-size:0.78rem;color:var(--muted);border:1px solid rgba(0,0,0,0.04)}
 
-.video-link{margin-top:auto;display:inline-block;padding:0.55rem 0.9rem;border-radius:10px;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 70%, var(--accent-2)));color:#fff;text-decoration:none;font-weight:700;box-shadow:0 6px 16px rgba(74,144,226,0.18);transition:transform var(--transition-fast),opacity var(--transition-fast)}
+/* Video / action link: gradient background, texto blanco para contraste */
+.video-link{
+  margin-top:auto;
+  display:inline-block;
+  padding:0.55rem 0.9rem;
+  border-radius:10px;
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 70%, var(--accent-2)));
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:700;
+  box-shadow:0 6px 16px rgba(74,144,226,0.18);
+  transition:transform var(--transition-fast),opacity var(--transition-fast)
+}
 .video-link:hover,.video-link:focus{transform:translateY(-3px);opacity:0.95}
 
 /* Small UI helpers */
@@ -145,7 +246,16 @@ nav a:hover,nav a:focus{transform:translateY(-2px);outline:none}
 .lang-card{animation:fadeInUp 520ms cubic-bezier(.22,.9,.36,1) both}
 
 /* Focus states (accessibility) */
-a:focus{outline:3px solid color-mix(in srgb,var(--accent) 40%, transparent);outline-offset:3px}
+a:focus{
+  outline:3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset:3px;
+  border-radius:6px;
+}
+button:focus, input:focus, textarea:focus{
+  outline:3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset:2px;
+  border-radius:6px;
+}
 
 /* Responsive adjustments */
 @media (max-width:900px){
@@ -163,7 +273,7 @@ a:focus{outline:3px solid color-mix(in srgb,var(--accent) 40%, transparent);outl
   .lang-card, *{animation:none!important;transition:none!important}
 }
 
-/* Utility: light/dark toggle helper (example) */
+/* Utility: theme-toggle helper (sin modo oscuro) */
 .theme-toggle{background:transparent;border:1px solid var(--glass-border);padding:0.4rem;border-radius:8px;color:var(--text)}
 
 /* Footer */
@@ -206,12 +316,11 @@ footer{padding:1.5rem 0;color:var(--muted);text-align:center}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width 700ms cubic-bezier(.22,.9,.36,1)}
 
 .card-actions{display:flex;gap:0.5rem;align-items:center;margin-top:0.6rem}
-.mockup-btn{background:transparent;border:1px solid var(--glass-border);padding:0.4rem 0.6rem;border-radius:8px;cursor:pointer}
+.mockup-btn{background:transparent;border:1px solid var(--glass-border);padding:0.4rem 0.6rem;border-radius:8px;cursor:pointer;color:var(--text)}
 .mockup-btn:hover{transform:translateY(-2px)}
 .compare-label{display:flex;align-items:center;gap:0.4rem;font-size:0.9rem;color:var(--muted)}
 
 .code-mockup{background:rgba(0,0,0,0.04);padding:0.8rem;border-radius:8px;margin-top:0.6rem;overflow:auto;max-height:180px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;font-size:0.9rem}
-[data-theme="dark"] .code-mockup{background:rgba(255,255,255,0.03)}
 
 /* Compare modal */
 .compare-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.35);opacity:0;pointer-events:none;transition:opacity 240ms ease}
@@ -232,23 +341,27 @@ footer{padding:1.5rem 0;color:var(--muted);text-align:center}
 /* Suggestion box styles */
 .suggestion-panel{display:flex;flex-direction:column;gap:0.8rem}
 .suggestion-panel form{display:flex;flex-direction:column;gap:0.5rem}
-.form-row label{display:block;font-weight:600;margin-bottom:0.25rem}
+.form-row label{display:block;font-weight:600;margin-bottom:0.25rem;color:var(--text)}
 .form-row input,
 .form-row textarea{width:100%;padding:0.6rem;border-radius:8px;border:1px solid var(--glass-border);background:transparent;color:var(--text);resize:vertical}
 .form-controls{display:flex;gap:0.5rem;align-items:center}
-.btn{padding:0.45rem 0.7rem;border-radius:8px;border:1px solid var(--glass-border);background:var(--surface);cursor:pointer}
-.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none}
+.btn{padding:0.45rem 0.7rem;border-radius:8px;border:1px solid var(--glass-border);background:var(--surface);cursor:pointer;color:var(--text)}
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#ffffff;
+  border:none;
+}
 .btn.small{padding:0.3rem 0.5rem;font-size:0.85rem}
 
 #sugg-list{display:grid;gap:0.8rem;margin-top:0.6rem}
 .sugg-item{background:var(--surface);padding:0.8rem;border-radius:10px;border:1px solid var(--glass-border);box-shadow:var(--shadow-sm)}
 .sugg-meta{display:flex;justify-content:space-between;align-items:center;gap:0.6rem}
-.sugg-author{font-weight:700}
+.sugg-author{font-weight:700;color:var(--text)}
 .sugg-text{margin:0.4rem 0;color:var(--text)}
 .sugg-transcript{font-size:0.9rem;color:var(--muted);margin-top:0.4rem}
 .sugg-actions{display:flex;gap:0.4rem;align-items:center;margin-top:0.6rem}
-.sugg-actions .vote{background:transparent;border:1px solid var(--glass-border);padding:0.3rem 0.5rem;border-radius:8px;cursor:pointer}
-.sugg-actions .vote .count{margin-left:0.35rem;font-weight:700}
+.sugg-actions .vote{background:transparent;border:1px solid var(--glass-border);padding:0.3rem 0.5rem;border-radius:8px;cursor:pointer;color:var(--text)}
+.sugg-actions .vote .count{margin-left:0.35rem;font-weight:700;color:var(--text)}
 
 /* small improvements */
 .muted{font-size:0.95rem}
@@ -259,40 +372,67 @@ footer{padding:1.5rem 0;color:var(--muted);text-align:center}
 .route-sequence{padding-left:1.1rem}
 .route-step{padding:0.5rem 0;border-bottom:1px dashed rgba(0,0,0,0.03)}
 .route-step:last-child{border-bottom:none}
-.pill{display:inline-block;background:rgba(0,0,0,0.04);padding:0.15rem 0.45rem;border-radius:999px;margin-left:0.6rem;font-size:0.8rem}
+.pill{display:inline-block;background:rgba(0,0,0,0.04);padding:0.15rem 0.45rem;border-radius:999px;margin-left:0.6rem;font-size:0.8rem;color:var(--text)}
 .langs-list{margin:0.4rem 0}
-.lang-chip{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:0.25rem 0.5rem;border-radius:999px;margin-right:0.35rem;font-weight:700;text-decoration:none;cursor:pointer;transition:transform var(--transition-fast),opacity var(--transition-fast)}
+.lang-chip{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#ffffff;
+  padding:0.25rem 0.5rem;
+  border-radius:999px;
+  margin-right:0.35rem;
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+  transition:transform var(--transition-fast),opacity var(--transition-fast)
+}
 .lang-chip:hover{transform:translateY(-2px);opacity:0.9}
 .lang-chip:focus{outline:2px solid var(--accent);outline-offset:2px}
-.project-card{background:transparent;border:1px dashed var(--glass-border);padding:0.6rem;border-radius:8px;margin-top:0.4rem}
+.project-card{background:transparent;border:1px dashed var(--glass-border);padding:0.6rem;border-radius:8px;margin-top:0.4rem;color:var(--text)}
 .eval-list{margin:0.4rem 0;padding-left:1.1rem}
-.eval-list li{margin:0.3rem 0}
-.eval-link{color:var(--accent);text-decoration:none;font-weight:600;transition:color var(--transition-fast),text-decoration var(--transition-fast)}
-.eval-link:hover{color:var(--accent-2);text-decoration:underline}
+.eval-list li{margin:0.3rem 0;color:var(--text)}
+.eval-link{color:var(--text);text-decoration:none;font-weight:600;transition:color var(--transition-fast),text-decoration var(--transition-fast)}
+.eval-link:hover{color: color-mix(in srgb, var(--text) 88%, var(--accent-2) 12%);text-decoration:underline}
 .eval-link:focus{outline:2px solid var(--accent);outline-offset:2px}
 
 /* Community styles */
 .community-grid{display:grid;grid-template-columns:1fr 1fr 250px;gap:1rem;margin-top:1rem}
 .community-column{display:flex;flex-direction:column}
 .forum-list{list-style:none;padding:0;margin:0}
-.forum-list li{background:var(--surface);padding:0.8rem;margin-bottom:0.6rem;border-radius:10px;border:1px solid var(--glass-border)}
+.forum-list li{background:var(--surface);padding:0.8rem;margin-bottom:0.6rem;border-radius:10px;border:1px solid var(--glass-border);color:var(--text)}
 .groups-list{display:grid;gap:0.6rem}
-.group-item{background:var(--surface);padding:0.8rem;border-radius:10px;border:1px solid var(--glass-border)}
+.group-item{background:var(--surface);padding:0.8rem;border-radius:10px;border:1px solid var(--glass-border);color:var(--text)}
 .jobs-list{display:grid;gap:0.6rem}
-.job-item{background:var(--surface);padding:0.8rem;border-radius:10px;border:1px solid var(--glass-border)}
+.job-item{background:var(--surface);padding:0.8rem;border-radius:10px;border:1px solid var(--glass-border);color:var(--text)}
 .activity-list{list-style:none;padding:0;margin:0}
 .activity-list li{font-size:0.85rem;padding:0.4rem 0;color:var(--muted)}
-.community-aside{background:rgba(0,0,0,0.02);padding:0.8rem;border-radius:10px}
+.community-aside{background:rgba(0,0,0,0.02);padding:0.8rem;border-radius:10px;color:var(--text)}
 
-/* Author card styles */
 .author-card{background:var(--surface);border-radius:10px;padding:0.8rem;border:1px solid var(--glass-border)}
 .author-media{margin-bottom:0.6rem}
 .author-avatar{width:100%;height:180px;object-fit:contain;border-radius:8px}
 .author-name{margin:0.6rem 0 0;font-size:1.05rem}
 .author-langs{font-size:0.9rem;color:var(--muted)}
-.badge{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:0.15rem 0.4rem;border-radius:999px;margin:0.2rem 0.2rem 0.2rem 0}
+.badge{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#ffffff;
+  padding:0.15rem 0.4rem;
+  border-radius:999px;
+  margin:0.2rem 0.2rem 0.2rem 0;
+}
 .author-thanks{margin:0.6rem 0 0;font-size:0.9rem;color:var(--muted)}
-.author-link{display:inline-block;margin-top:0.6rem;padding:0.4rem 0.7rem;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;text-decoration:none;font-weight:600;font-size:0.85rem}
+.author-link{
+  display:inline-block;
+  margin-top:0.6rem;
+  padding:0.4rem 0.7rem;
+  border-radius:8px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.85rem;
+}
 
 @media (max-width:1024px){
   .community-grid{grid-template-columns:1fr;grid-template-areas:"main"}
@@ -302,3 +442,23 @@ footer{padding:1.5rem 0;color:var(--muted);text-align:center}
   .community-column{gap:0.6rem}
 }
 
+/* Accessibility: aumentar contraste si usuario lo requiere */
+@media (prefers-contrast: more){
+  :root{ --surface: rgba(255,255,255,1); --bg: #ffffff; --text: #003f7f; --heading: #021024; }
+}
+
+/* Link default style: ahora azul como todo el texto */
+a{
+  color:var(--text);
+  text-decoration:underline;
+}
+a:hover, a:focus{
+  color: color-mix(in srgb, var(--text) 88%, var(--accent-2) 12%);
+}
+
+/* small accessible tweak: ensure section boxes contrast when backgrounds overlap */
+.section-box{
+  background: color-mix(in srgb, var(--surface) 92%, var(--bg) 8%);
+}
+
+/* End of file */

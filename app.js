@@ -586,6 +586,260 @@
     });
   }
 
+
+  // Aula virtual app builder (language-specific paths + quiz evaluation)
+  const LEVEL_LABELS = {
+    beginner: 'Principiante',
+    intermediate: 'Intermedio',
+    advanced: 'Avanzado'
+  };
+
+  const CLASSROOM_LANG_LABELS = {
+    javascript: 'JavaScript',
+    python: 'Python',
+    java: 'Java',
+    sql: 'SQL',
+    bash: 'Bash',
+    html5: 'HTML5',
+    css3: 'CSS3',
+    git: 'Git / GitHub'
+  };
+
+  function buildBaseTemplate(label){
+    return {
+      label,
+      beginner: {
+        modules:[
+          {title:`Fundamentos de ${label}`, type:'Fundamentos'},
+          {title:`Tutoría guiada: primeros retos en ${label}`, type:'Práctica guiada'},
+          {title:`Mini proyecto de iniciación con ${label}`, type:'Proyecto'}
+        ],
+        quiz:[
+          {q:`¿Qué debes reforzar primero en una ruta de ${label}?`, options:['Fundamentos y práctica guiada','Solo memorizar teoría','Saltar al nivel avanzado'], answer:0},
+          {q:`¿Qué evidencia progreso real en ${label}?`, options:['Resolver retos y explicar soluciones','Ver videos sin practicar','No recibir feedback'], answer:0}
+        ]
+      },
+      intermediate: {
+        modules:[
+          {title:`Buenas prácticas y patrones en ${label}`, type:'Fundamentos'},
+          {title:'Resolución de casos reales con tutoría', type:'Práctica guiada'},
+          {title:`Proyecto intermedio aplicado en ${label}`, type:'Proyecto'}
+        ],
+        quiz:[
+          {q:'¿Qué actividad mejora más tu nivel intermedio?', options:['Code review y refactorización','Evitar correcciones','Solo copiar soluciones'], answer:0},
+          {q:'¿Qué combina mejor aprendizaje y evaluación?', options:['Retos + feedback + iteración','Examen único sin práctica','Estudio sin proyecto'], answer:0}
+        ]
+      },
+      advanced: {
+        modules:[
+          {title:`Arquitectura y decisiones técnicas con ${label}`, type:'Fundamentos'},
+          {title:'Rendimiento, seguridad y escalabilidad', type:'Práctica guiada'},
+          {title:`Proyecto experto y defensa técnica en ${label}`, type:'Proyecto'}
+        ],
+        quiz:[
+          {q:'En nivel avanzado, ¿qué se evalúa?', options:['Calidad técnica integral','Cantidad de líneas de código','Memorización aislada'], answer:0},
+          {q:'¿Qué demuestra madurez profesional?', options:['Automatizar pruebas y documentar','Evitar testing','Ignorar métricas'], answer:0}
+        ]
+      }
+    };
+  }
+
+  const CLASSROOM_TEMPLATES = {
+    javascript: {
+      ...buildBaseTemplate('JavaScript'),
+      intermediate: {
+        modules:[
+          {title:'ES6+, módulos y asincronía avanzada', type:'Fundamentos'},
+          {title:'Consumo de APIs y manejo de errores', type:'Práctica guiada'},
+          {title:'Proyecto SPA con rutas y estado', type:'Proyecto'}
+        ],
+        quiz:[
+          {q:'¿Qué keyword define una constante?', options:['var','const','let'], answer:1},
+          {q:'¿Qué método transforma un array devolviendo uno nuevo?', options:['forEach','map','push'], answer:1}
+        ]
+      }
+    },
+    python: {
+      ...buildBaseTemplate('Python'),
+      beginner: {
+        modules:[
+          {title:'Tipos de datos y control de flujo', type:'Fundamentos'},
+          {title:'Funciones y estructuras de datos', type:'Práctica guiada'},
+          {title:'Proyecto: script automatizado', type:'Proyecto'}
+        ],
+        quiz:[
+          {q:'¿Qué símbolo inicia un comentario en Python?', options:['//','#','--'], answer:1},
+          {q:'¿Qué estructura almacena pares clave-valor?', options:['list','tuple','dict'], answer:2}
+        ]
+      }
+    }
+  };
+
+  function getGenericClassroomTemplate(langId){
+    return buildBaseTemplate(CLASSROOM_LANG_LABELS[langId] || (langId || '').toUpperCase());
+  }
+
+  function getClassroomKey(langId, level){
+    return `${langId}_${level}`;
+  }
+
+  function buildClassroomRoute(state){
+    const langSel = document.getElementById('classroom-language');
+    const levelSel = document.getElementById('classroom-level');
+    const result = document.getElementById('classroom-result');
+    const status = document.getElementById('classroom-status');
+    const quiz = document.getElementById('classroom-quiz');
+    if(!langSel || !levelSel || !result || !quiz) return;
+
+    const langId = langSel.value;
+    const level = levelSel.value;
+    const template = CLASSROOM_TEMPLATES[langId] || getGenericClassroomTemplate(langId);
+    const route = template[level];
+    const routeKey = getClassroomKey(langId, level);
+
+    state.classroomProgress = state.classroomProgress || {};
+    const completedByRoute = state.classroomProgress[routeKey] || {};
+    const completedCount = route.modules.filter((_, idx) => completedByRoute[`m_${idx}`]).length;
+
+    result.innerHTML = `
+      <div class="app-route-meta">
+        <span class="app-badge">Lenguaje: ${template.label}</span>
+        <span class="app-badge">Nivel: ${LEVEL_LABELS[level] || level}</span>
+        <span class="app-badge">Gamificación activa</span>
+      </div>
+      <div class="app-progress">Progreso de la ruta: <strong>${completedCount}/${route.modules.length}</strong></div>
+      <ol class="app-steps">
+        ${route.modules.map((m, idx) => `
+          <li class="app-step">
+            <label class="app-step-check">
+              <input type="checkbox" class="route-module-check" data-route-key="${routeKey}" data-module-index="${idx}" ${completedByRoute[`m_${idx}`] ? 'checked' : ''}>
+              <span><strong>${m.title}</strong><small>${m.type}</small></span>
+            </label>
+          </li>
+        `).join('')}
+      </ol>
+    `;
+
+    quiz.innerHTML = route.quiz.map((item, idx) => `
+      <fieldset class="quiz-item">
+        <legend><strong>Pregunta ${idx+1}</strong></legend>
+        <p>${item.q}</p>
+        ${item.options.map((opt, oIdx) => `
+          <label><input type="radio" name="quiz_${idx}" value="${oIdx}"> ${opt}</label>
+        `).join('')}
+      </fieldset>
+    `).join('') + `
+      <div class="quiz-submit-row">
+        <button type="submit" class="btn primary">Evaluar ruta</button>
+        <span class="quiz-score" id="quiz-score"></span>
+      </div>
+    `;
+
+    state.classroom = {langId, level, routeKey, route};
+    saveState(state);
+    if(status) status.textContent = `Ruta de ${template.label} (${LEVEL_LABELS[level] || level}) generada correctamente.`;
+  }
+
+  function bindClassroomModuleTracking(state){
+    const result = document.getElementById('classroom-result');
+    if(!result) return;
+
+    result.addEventListener('change', e => {
+      const check = e.target.closest('.route-module-check');
+      if(!check) return;
+
+      const routeKey = check.dataset.routeKey;
+      const idx = check.dataset.moduleIndex;
+      const key = `m_${idx}`;
+      state.classroomProgress = state.classroomProgress || {};
+      state.classroomProgress[routeKey] = state.classroomProgress[routeKey] || {};
+
+      const wasDone = !!state.classroomProgress[routeKey][key];
+      const isNowDone = !!check.checked;
+      state.classroomProgress[routeKey][key] = isNowDone;
+      saveState(state);
+
+      if(!wasDone && isNowDone){
+        awardPoints(state, 5, `completaste un módulo de ${routeKey}`);
+      }
+
+      if(state.classroom && state.classroom.langId && state.classroom.level){
+        buildClassroomRoute(state);
+      }
+    });
+  }
+
+  function initClassroomApp(state){
+    const buildBtn = document.getElementById('build-classroom');
+    const quizForm = document.getElementById('classroom-quiz');
+    const status = document.getElementById('classroom-status');
+
+    bindClassroomModuleTracking(state);
+
+    if(buildBtn){
+      buildBtn.addEventListener('click', ()=>{
+        const langSel = document.getElementById('classroom-language');
+        const levelSel = document.getElementById('classroom-level');
+        const routeKey = getClassroomKey(langSel?.value || '', levelSel?.value || '');
+
+        buildClassroomRoute(state);
+
+        state.classroomGenerated = state.classroomGenerated || {};
+        if(!state.classroomGenerated[routeKey]){
+          state.classroomGenerated[routeKey] = true;
+          saveState(state);
+          awardPoints(state, 8, 'creaste una nueva ruta de aula virtual');
+        }
+      });
+    }
+
+    if(quizForm){
+      quizForm.addEventListener('submit', e=>{
+        e.preventDefault();
+        const active = state.classroom;
+        if(!active || !active.route) return;
+
+        const unanswered = active.route.quiz.some((_, idx) => !quizForm.querySelector(`input[name="quiz_${idx}"]:checked`));
+        if(unanswered){
+          if(status) status.textContent = 'Responde todas las preguntas antes de evaluar tu ruta.';
+          return;
+        }
+
+        let score = 0;
+        active.route.quiz.forEach((q, idx)=>{
+          const checked = quizForm.querySelector(`input[name="quiz_${idx}"]:checked`);
+          if(checked && Number(checked.value) === q.answer) score += 1;
+        });
+
+        const total = active.route.quiz.length;
+        const pct = Math.round((score / total) * 100);
+        const scoreEl = document.getElementById('quiz-score');
+        if(scoreEl) scoreEl.textContent = `Resultado: ${score}/${total} (${pct}%)`;
+
+        state.classroomQuiz = state.classroomQuiz || {};
+        const quizStats = state.classroomQuiz[active.routeKey] || {attempts: 0, best: 0, passed: false};
+        quizStats.attempts += 1;
+        quizStats.best = Math.max(quizStats.best, pct);
+        const firstPass = pct >= 70 && !quizStats.passed;
+        if(pct >= 70) quizStats.passed = true;
+        state.classroomQuiz[active.routeKey] = quizStats;
+        saveState(state);
+
+        if(firstPass) awardPoints(state, 25, `aprobaste evaluación de ${active.langId}`);
+        else if(quizStats.attempts === 1) awardPoints(state, 10, `completaste evaluación de ${active.langId}`);
+        else awardPoints(state, 3, `nuevo intento de evaluación de ${active.langId}`);
+      });
+    }
+
+    if(state.classroom && state.classroom.langId){
+      const langSel = document.getElementById('classroom-language');
+      const levelSel = document.getElementById('classroom-level');
+      if(langSel) langSel.value = state.classroom.langId;
+      if(levelSel) levelSel.value = state.classroom.level;
+      buildClassroomRoute(state);
+    }
+  }
+
   // Theme
   function applyTheme(theme){
     if(theme === 'dark') document.documentElement.setAttribute('data-theme','dark');
@@ -1214,6 +1468,7 @@
     initSuggestions(state);
     // bind route UI
     bindRouteUI();
+    initClassroomApp(state);
 
     // Apply stored theme
     initTheme();

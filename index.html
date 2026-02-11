@@ -36,6 +36,7 @@
             ====================================== -->
             <ul>
                 <li><a href="#">Inicio</a></li>
+                <li><a href="#aula-app">Aula Virtual App</a></li>
                 <li><a href="#lenguajes">Lenguajes de Programación</a></li>
                 <li><a href="#rutas">Rutas de Aprendizaje</a></li>
                 <li><a href="#comunidad">Comunidad</a></li>
@@ -52,6 +53,70 @@
         <section id="dashboard">
             <h1>TUTOR-IA: Una Web para tu formación y actualización</h1>
             <p>Bienvenido a tu aula virtual. Aquí puedes acceder a tus cursos y recursos.</p>
+        </section>
+
+        <section id="aula-app" aria-labelledby="aula-app-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="aula-app-title">Aula Virtual App</h2>
+                    <p class="muted">Crea tu itinerario personalizado con tutorías, gamificación y evaluación automática por ruta.</p>
+                </header>
+
+                <div class="classroom-layout">
+                    <article class="classroom-panel">
+                        <h3>Configurar ruta de aprendizaje</h3>
+                        <div class="form-row">
+                            <label for="classroom-language">Lenguaje</label>
+                            <select id="classroom-language">
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="sql">SQL</option>
+                                <option value="bash">Bash</option>
+                                <option value="html5">HTML5</option>
+                                <option value="css3">CSS3</option>
+                                <option value="git">Git / GitHub</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="classroom-level">Nivel</label>
+                            <select id="classroom-level">
+                                <option value="beginner">Principiante</option>
+                                <option value="intermediate">Intermedio</option>
+                                <option value="advanced">Avanzado</option>
+                            </select>
+                        </div>
+                        <button id="build-classroom" class="btn primary">Generar aula virtual</button>
+                        <div id="classroom-status" class="muted" aria-live="polite"></div>
+                    </article>
+
+                    <article class="classroom-panel">
+                        <h3>Ruta activa</h3>
+                        <div id="classroom-result" class="classroom-result">
+                            <p class="muted">Selecciona lenguaje y nivel para generar tu ruta.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="classroom-layout classroom-layout--secondary">
+                    <article class="classroom-panel">
+                        <h3>Evaluación de ruta</h3>
+                        <form id="classroom-quiz" class="quiz-form" aria-live="polite">
+                            <p class="muted">Genera una ruta para activar la evaluación.</p>
+                        </form>
+                    </article>
+
+                    <article class="classroom-panel">
+                        <h3>Tutorías virtuales recomendadas</h3>
+                        <ul class="tutoring-list">
+                            <li><strong>Sesión 1:</strong> Diagnóstico de nivel y planificación de objetivos.</li>
+                            <li><strong>Sesión 2:</strong> Revisión de retos prácticos y feedback técnico.</li>
+                            <li><strong>Sesión 3:</strong> Simulación de evaluación final y plan de mejora.</li>
+                        </ul>
+                        <p class="muted">Tip: completa cada sesión y marca avances para desbloquear insignias.</p>
+                    </article>
+                </div>
+            </div>
         </section>
 
         <!-- ==================== SECCIÓN: LENGUAJES DE PROGRAMACIÓN ====================

@@ -462,3 +462,65 @@ a:hover, a:focus{
 }
 
 /* End of file */
+/* Aula Virtual App section */
+.classroom-layout{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+.classroom-layout--secondary{margin-top:0.8rem}
+.classroom-panel{
+  background:var(--surface);
+  border:1px solid var(--glass-border);
+  border-radius:14px;
+  padding:1rem;
+  box-shadow:var(--shadow-md);
+}
+.classroom-panel h3{margin-top:0}
+.classroom-panel select{
+  width:100%;
+  margin-top:0.35rem;
+  border:1px solid var(--glass-border);
+  border-radius:8px;
+  padding:0.55rem;
+  background:var(--bg);
+  color:var(--text);
+}
+.classroom-result{display:grid;gap:0.75rem}
+.app-route-meta{display:flex;flex-wrap:wrap;gap:0.5rem}
+.app-badge{
+  background:color-mix(in srgb,var(--accent) 22%, transparent);
+  color:var(--text);
+  border-radius:999px;
+  padding:0.25rem 0.65rem;
+  font-size:0.86rem;
+  border:1px solid color-mix(in srgb,var(--accent) 45%, transparent);
+}
+.app-steps{margin:0;padding-left:1.2rem;display:grid;gap:0.45rem}
+
+.app-progress{font-size:0.95rem;color:var(--muted)}
+.app-step-check{display:flex;gap:0.55rem;align-items:flex-start;cursor:pointer}
+.app-step-check input{margin-top:0.2rem}
+.app-step{
+  background:color-mix(in srgb,var(--surface) 85%, var(--accent) 15%);
+  border-radius:10px;
+  padding:0.55rem 0.65rem;
+  border:1px solid var(--glass-border);
+}
+.app-step small{display:block;color:var(--muted)}
+.quiz-form{display:grid;gap:0.7rem}
+.quiz-item{
+  border:1px solid var(--glass-border);
+  border-radius:10px;
+  padding:0.75rem;
+  background:var(--bg);
+}
+.quiz-item p{margin:0 0 0.45rem}
+.quiz-item label{display:block;margin:0.2rem 0}
+.quiz-submit-row{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center}
+.quiz-score{
+  font-weight:700;
+  color:var(--accent);
+}
+.tutoring-list{margin:0;padding-left:1.1rem;display:grid;gap:0.45rem}
